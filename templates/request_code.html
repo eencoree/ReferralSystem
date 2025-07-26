@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request Authorization Code</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2em; background: #fafafa; }
+    section { background: white; padding: 1.5em; border-radius: 10px; box-shadow: 0 0 10px #ccc; max-width: 500px; margin: auto; }
+    .success { color: green; }
+    .error { color: red; }
+    .code-box { font-size: 1.2em; background: #f0f0f0; padding: 6px 10px; border-radius: 5px; display: inline-block; }
+  </style>
+</head>
+<body>
+  <section>
+    <h2>Request Authorization Code</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="phone_number">Phone Number:</label><br>
+      <input type="text" name="phone_number" id="phone_number" required placeholder="A phone number containing from 5 to 14 digits"><br><br>
+      <button type="submit">Get code</button>
+    </form>
+
+    {% if response %}
+      <hr>
+      {% if response.code %}
+        <p class="success"> {{ response.message }}</p>
+        <p><strong>Code:</strong> <span class="code-box">{{ response.code }}</span></p>
+      {% else %}
+        <p class="error">{{ response.message|default:response.Message }}</p>
+      {% endif %}
+    {% endif %}
+  </section>
+</body>
+</html>

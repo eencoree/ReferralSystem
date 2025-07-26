@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 2em auto;
+            background: #f9f9f9;
+            padding: 1em;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fff;
+            margin-bottom: 0.5em;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h2>User Profile</h2>
+
+{% if user_profile %}
+    <ul>
+        <li><span class="label">Phone Number:</span> {{ user_profile.phone_number }}</li>
+        <li><span class="label">Invite Code:</span> {{ user_profile.invite_code }}</li>
+        <li><span class="label">Activated Code:</span>
+            {% if user_profile.activated_code %}
+                {{ user_profile.activated_code }}
+            {% else %}
+                <em>Not activated</em>
+            {% endif %}
+        </li>
+        <li><span class="label">Referrals:</span>
+            {% if user_profile.referrals %}
+                <ul>
+                    {% for phone in user_profile.referrals %}
+                        <li>{{ phone }}</li>
+                    {% empty %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    </ul>
+{% else %}
+    <p>User profile information requires authorization</p>
+{% endif %}
+
+</body>
+</html>

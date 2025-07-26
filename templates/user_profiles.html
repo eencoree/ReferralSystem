@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Users</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    th {
+      background-color: #eee;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>All User Profiles</h1>
+  {% if users %}
+    <table>
+      <thead>
+        <tr>
+          <th>Phone Number</th>
+          <th>Invite Code</th>
+          <th>Activated Code</th>
+          <th>Referrals</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.phone_number }}</td>
+            <td>{{ user.invite_code }}</td>
+            <td>{{ user.activated_code|default:"—" }}</td>
+            <td>
+              {% if user.referrals %}
+                <ul>
+                  {% for ref in user.referrals %}
+                    <li>{{ ref }}</li>
+                  {% empty %}
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No users found.</p>
+  {% endif %}
+</body>
+</html>
